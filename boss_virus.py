@@ -1,0 +1,74 @@
+import time
+import pygame
+from pygame.sprite import Sprite
+import random
+import tkinter as tk
+import game_fuctions as gf
+import jj_type
+
+pygame.init()
+class Boss_virus(Sprite):
+    def __init__(self,ai_settings,screen,jj,bis):
+        super(Boss_virus,self).__init__()
+        self.screen=screen
+        self.ai_settings=ai_settings
+        self.bi_health = ai_settings.boss_virus_health
+        self.bi_damage = ai_settings.bi_damage
+        self.image = pygame.image.load('level/enemy pool/intance_images/virus_boss_image.png', 'level')
+        self.rect=self.image.get_rect()
+        self.bi_type = 4
+        self.rect.x=float(self.rect.width)
+        self.rect.y=float(self.rect.height)
+
+        screen_center_x = self.screen.get_rect().centerx
+        screen_center_y = self.screen.get_rect().centery
+        self.rect.center = (screen_center_x, screen_center_y)
+
+        self.x = float(self.rect.x)
+        self.y = float(self.rect.y) - 150
+
+
+    def bi_take_damage(self,damage,ai_settings,stats,bis):
+        stats.energy += 0.1
+        self.bi_health-=damage
+        if self.bi_health < 0.0:
+            stats.score += 50
+            stats.jj_left += 30
+            stats.energy += (ai_settings.bi_points) * 0.5
+            stats.species += 2000
+            self.kill()
+            for i in range(1,5):
+                bis.add(self)
+
+            # bis.empty()
+            # pygame.quit()
+            # stats.game_active = False
+            # pygame.mouse.set_visible(True)
+            # self.kill_boss_screen()
+
+    def check_edges(self):
+        screen_rect=self.screen.get_rect()
+        if self.rect.right>=screen_rect.right:
+            return True
+        elif self.rect.left<=0:
+            return True
+
+    def update(self,jj):
+        self.bi_health += 10
+        is_release_skill = random.randint(1, 250)
+        if is_release_skill == 5:
+            print('yes')
+            # self.rect.x = jj.rect.x
+            # self.rect.y = jj.rect.y
+            jj.rect.x = self.rect.x
+            jj.rect.y = self.rect.y
+
+
+
+    def blitme(self):
+        self.screen.blit(self.image,self.rect)
+    def kill_boss_screen(self):
+        win = tk.Tk()
+        win.geometry('120x60+650+300')
+        tk.Label(win,text='Congratualation!!!',padx=20,pady=20,foreground='red').pack()
+        win.mainloop()
