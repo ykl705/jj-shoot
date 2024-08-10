@@ -282,7 +282,10 @@ def check_bis_bottom(ai_settings,stats,screen,jj,bis,bullets):
     if i_n != len(bis):
         i_n = len(bis)
     else:
-        bis.empty()
+        if enemy_pool_id != 2 and enemy_pool_id != 3:
+            bis.empty()
+        else :
+            pass
     for bi in bis.sprites():
         if bi.rect.bottom >= screen_rect.bottom or bi.rect.x <= 0 or bi.rect.x >= 700:
             bis.remove(bi)
