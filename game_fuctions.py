@@ -279,7 +279,7 @@ def check_bis_bottom(ai_settings,stats,screen,jj,bis,bullets):
     #         bi.kill()
     global i_n
     print('i = ',i_n,'len = ',len(bis))
-    if i_n != len(bis):
+    if i_n != len(bis) or 5000 >= stats.score >=2500 or 150000 >= stats.score >= 50000 or 12000 >= stats.score >= 7500 or 100000 >= stats.score >= 75000 or stats.score >150000:
         i_n = len(bis)
     else:
         if enemy_pool_id != 2 and enemy_pool_id != 3:
